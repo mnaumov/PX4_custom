@@ -1,0 +1,5 @@
+menuconfig DRIVERS_BATT_TEMP_SENSOR
+	bool "batt_temp_sensor"
+	default n
+	---help---
+		Enable support for batt_temp_sensor

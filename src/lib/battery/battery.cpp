@@ -130,6 +130,9 @@ void Battery::updateBatteryStatus(const hrt_abstime &timestamp, float voltage_v,
 		connected = false;
 	}
 
+	battery_temperature_s bat_temp{};
+	_battery_temperature_sub.copy(&bat_temp);
+
 	battery_status_s battery_status{};
 	battery_status.voltage_v = voltage_v;
 	battery_status.voltage_filtered_v = _voltage_filter_v.getState();
@@ -139,7 +142,7 @@ void Battery::updateBatteryStatus(const hrt_abstime &timestamp, float voltage_v,
 	battery_status.discharged_mah = _discharged_mah;
 	battery_status.remaining = _state_of_charge;
 	battery_status.scale = _scale;
-	battery_status.temperature = NAN;
+	battery_status.temperature = bat_temp.temperature_deg;
 	// Publish at least one cell such that the total voltage gets into MAVLink BATTERY_STATUS
 	battery_status.cell_count = math::max(_params.n_cells, static_cast<int32_t>(1));
 	battery_status.connected = connected;

@@ -56,6 +56,9 @@
 #include <uORB/PublicationMulti.hpp>
 #include <uORB/topics/battery_status.h>
 
+#include <uORB/topics/battery_temperature.h>
+#include <uORB/Subscription.hpp>
+
 /**
  * BatteryBase is a base class for any type of battery.
  *
@@ -189,6 +192,8 @@ private:
 	void computeScale();
 
 	uORB::PublicationMulti<battery_status_s> _battery_status_pub{ORB_ID(battery_status)};
+
+	uORB::Subscription	_battery_temperature_sub{ORB_ID(battery_temperature)};
 
 	bool _battery_initialized{false};
 	AlphaFilter<float> _voltage_filter_v;
